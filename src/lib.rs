@@ -19,11 +19,22 @@ pub trait IntoRc {
 pub trait RcStringExt {
     type RcSlice: RcStrExt;
 
+    fn as_rc_slice(&self) -> Self::RcSlice;
+    fn rc_slice_to(&self, usize) -> Self::RcSlice;
+    fn rc_slice_from(&self, usize) -> Self::RcSlice;
+    fn rc_slice(&self, usize, usize) -> Self::RcSlice;
+    fn rc_split_at(&self, usize) -> (Self::RcSlice, Self::RcSlice);
 }
 
 pub trait RcStrExt {
     type RcOwned: RcStringExt;
 
+    fn to_rc_string(&self) -> Self::RcOwned;
+
+    fn rc_slice_to(&self, usize) -> Self;
+    fn rc_slice_from(&self, usize) -> Self;
+    fn rc_slice_at(&self, usize, usize) -> Self;
+    fn rc_split_at(&self, usize) -> (Self, Self);
 }
 
 impl RcStringExt for Rc<String> {
